@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset=»UTF-8″>
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+
+
+  <style>
+    body {
+      font-family: Arial;
+    }
+    .block {
+      position: relative;
+      border-radius: 10px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+    }
+    .delete-btn {
+      cursor: pointer;
+      border: 1px solid #E56464FF;
+      border-radius: 10px;
+      padding: 6px 12px;
+      color: white;
+      background-color: #e56464;
+      margin-right: 20px;
+      font-size: 20px;
+      font-weight: normal;
+
+    }
+    .delete-btn:hover {
+      border: 1px solid #AD5858FF;
+      background-color: #AD5858FF;
+    }
+    .image-container, .video-container {
+      text-align: center;
+      margin: 0 auto;
+    }
+    .image-container img, .video-container video {
+      margin-right: 10px;
+      max-width: 70%;
+      border-radius: 15px;
+    }
+    .image-container input, .video-container input {
+      display: block;
+      padding: 10px 20px;
+      margin: 0 auto;
+      width: 60%;
+      border: 1px solid black;
+      border-radius: 5px;
+    }
+    h1 {
+      font-size: 35px;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f22f;
+    }
+
+    /* Кнопка выпадающего списка */
+
+    /* Контейнер <div> - необходим для размещения выпадающего содержимого */
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+
+    /* Выпадающее содержимое (скрыто по умолчанию) */
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      width: 200px;
+      box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+      z-index: 1000;
+      background-color: white;
+      border-radius: 5px;
+      border: 1px solid #eaeaea;
+      padding: 10px;
+      gap: 10px;
+    }
+
+    /* Ссылки внутри выпадающего списка */
+    .dropdown-content a {
+      color: black;
+      padding: 0;
+      text-decoration: none;
+      display: block;
+      -webkit-user-select: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .dropdown-content a {
+      color: black;
+      padding: 0;
+      text-decoration: none;
+      -webkit-user-select: none;
+      cursor: pointer;
+      border-radius: 5px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+    }
+
+    .aSvg {
+      margin-right: 10px;
+      width: 20px;
+      border: 1px solid #ececec;
+      padding: 5px;
+      border-radius: 5px;
+    }
+
+    /* Изменение цвета выпадающих ссылок при наведении курсора */
+    .dropdown-content a:hover
+    {
+      background-color: #f3f3f3;
+
+
+    }
+
+    /* Показать выпадающее меню (используйте JS, чтобы добавить этот класс .dropdown-content содержимого, когда пользователь нажимает на кнопку выпадающего списка) */
+    .show {display:block;}
+
+    .dropbtn {
+      background: none;
+      border: 0;
+      padding: 6px 12px;
+      border-radius: 10px;
+      -webkit-user-select: none;
+      cursor: pointer;
+      font-size: 20px;
+      font-weight: normal;
+    }
+    .dropbtn:hover {
+      background-color: #f3f3f3;
+    }
+    .body_block {
+      overflow: hidden;
+      margin-right: 17px;
+    }
+    .getHtml {
+      position: fixed;
+      bottom: 5px;
+      right: 5px;
+      padding: 10px 20px;
+      font-size: 25px;
+      border-radius: 10px;
+      border: 1px solid darkgray;
+      background: none;
+    }
+
+    .getHtml:hover {
+      background-color: #eeeeee;
+    }
+
+
+  </style>
+
+</head>
+<body>
+
+<div style="width: 800px; margin: 50px auto; border: 1px solid #d9d9d9; border-radius: 10px; padding: 10px 50px; word-break: break-word;">
+  <div id="container"></div>
+  <div class="dropdown">
+    <button onclick="openAddMenu()" class="dropbtn">
+      +
+    </button>
+    <div id="addDropdown" class="dropdown-content">
+      <a onclick="addBlock('h1')">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aSvg">
+          <path stroke-linecap="round" d="M16.5 12a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zm0 0c0 1.657 1.007 3 2.25 3S21 13.657 21 12a9 9 0 10-2.636 6.364M16.5 12V8.25" />
+        </svg>
+        Заголовок
+      </a>
+      <a onclick="addBlock('p')">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aSvg">
+          <path stroke-linecap="round" d="M16.5 12a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zm0 0c0 1.657 1.007 3 2.25 3S21 13.657 21 12a9 9 0 10-2.636 6.364M16.5 12V8.25" />
+        </svg>
+
+        Параграф
+      </a>
+      <a onclick="addBlock('img')">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aSvg">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+        </svg>
+        Изображение
+      </a>
+      <a onclick="addBlock('video')">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aSvg">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3.375 19.5h17.25m-17.25 0a1.125 1.125 0 01-1.125-1.125M3.375 19.5h1.5C5.496 19.5 6 18.996 6 18.375m-3.75 0V5.625m0 12.75v-1.5c0-.621.504-1.125 1.125-1.125m18.375 2.625V5.625m0 12.75c0 .621-.504 1.125-1.125 1.125m1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125m0 3.75h-1.5A1.125 1.125 0 0118 18.375M20.625 4.5H3.375m17.25 0c.621 0 1.125.504 1.125 1.125M20.625 4.5h-1.5C18.504 4.5 18 5.004 18 5.625m3.75 0v1.5c0 .621-.504 1.125-1.125 1.125M3.375 4.5c-.621 0-1.125.504-1.125 1.125M3.375 4.5h1.5C5.496 4.5 6 5.004 6 5.625m-3.75 0v1.5c0 .621.504 1.125 1.125 1.125m0 0h1.5m-1.5 0c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125m1.5-3.75C5.496 8.25 6 7.746 6 7.125v-1.5M4.875 8.25C5.496 8.25 6 8.754 6 9.375v1.5m0-5.25v5.25m0-5.25C6 5.004 6.504 4.5 7.125 4.5h9.75c.621 0 1.125.504 1.125 1.125m1.125 2.625h1.5m-1.5 0A1.125 1.125 0 0118 7.125v-1.5m1.125 2.625c-.621 0-1.125.504-1.125 1.125v1.5m2.625-2.625c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125M18 5.625v5.25M7.125 12h9.75m-9.75 0A1.125 1.125 0 016 10.875M7.125 12C6.504 12 6 12.504 6 13.125m0-2.25C6 11.496 5.496 12 4.875 12M18 10.875c0 .621-.504 1.125-1.125 1.125M18 10.875c0 .621.504 1.125 1.125 1.125m-2.25 0c.621 0 1.125.504 1.125 1.125m-12 5.25v-5.25m0 5.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125m-12 0v-1.5c0-.621-.504-1.125-1.125-1.125M18 18.375v-5.25m0 5.25v-1.5c0-.621.504-1.125 1.125-1.125M18 13.125v1.5c0 .621.504 1.125 1.125 1.125M18 13.125c0-.621.504-1.125 1.125-1.125M6 13.125v1.5c0 .621-.504 1.125-1.125 1.125M6 13.125C6 12.504 5.496 12 4.875 12m-1.5 0h1.5m-1.5 0c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125M19.125 12h1.5m0 0c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125m-17.25 0h1.5m14.25 0h1.5" />
+        </svg>
+        Видео
+      </a>
+      <a onclick="addBlock('table')">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="aSvg">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3.375 19.5h17.25m-17.25 0a1.125 1.125 0 01-1.125-1.125M3.375 19.5h7.5c.621 0 1.125-.504 1.125-1.125m-9.75 0V5.625m0 12.75v-1.5c0-.621.504-1.125 1.125-1.125m18.375 2.625V5.625m0 12.75c0 .621-.504 1.125-1.125 1.125m1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125m0 3.75h-7.5A1.125 1.125 0 0112 18.375m9.75-12.75c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125m19.5 0v1.5c0 .621-.504 1.125-1.125 1.125M2.25 5.625v1.5c0 .621.504 1.125 1.125 1.125m0 0h17.25m-17.25 0h7.5c.621 0 1.125.504 1.125 1.125M3.375 8.25c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125m17.25-3.75h-7.5c-.621 0-1.125.504-1.125 1.125m8.625-1.125c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125m-17.25 0h7.5m-7.5 0c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125M12 10.875v-1.5m0 1.5c0 .621-.504 1.125-1.125 1.125M12 10.875c0 .621.504 1.125 1.125 1.125m-2.25 0c.621 0 1.125.504 1.125 1.125M13.125 12h7.5m-7.5 0c-.621 0-1.125.504-1.125 1.125M20.625 12c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125m-17.25 0h7.5M12 14.625v-1.5m0 1.5c0 .621-.504 1.125-1.125 1.125M12 14.625c0 .621.504 1.125 1.125 1.125m-2.25 0c.621 0 1.125.504 1.125 1.125m0 1.5v-1.5m0 0c0-.621.504-1.125 1.125-1.125m0 0h7.5" />
+        </svg>
+        Таблица
+      </a>
+    </div>
+  </div>
+</div>
+
+
+
+<button class="getHtml" onclick="getHtml()">Получить HTML</button>
+
+
+<script>
+  function addBlock(type) {
+    const container = document.getElementById('container');
+    const block = document.createElement('div');
+    block.className = 'block';
+    block.innerHTML = `
+        <div class="delete-btn" onclick="deleteBlock(this)">x</div>
+        ${type === 'table' ? getTableHtml() : `<${type} contenteditable="true">${getDefaultContent(type)}</${type}>`}
+      `;
+    if (type === 'img') {
+      const imageContainer = document.createElement('div');
+      imageContainer.className = 'image-container';
+      const image = document.createElement('img');
+      image.src = 'https://via.placeholder.com/300';
+      imageContainer.appendChild(image);
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.placeholder = 'Введите ссылку на изображение';
+      input.oninput = function() {
+        image.src = input.value;
+      };
+      imageContainer.appendChild(input);
+      block.appendChild(imageContainer);
+    }
+    if (type === 'video') {
+      const videoContainer = document.createElement('div');
+      videoContainer.className = 'video-container';
+      const video = document.createElement('video');
+      video.src = 'https://example.com/video.mp4';
+      video.controls = true;
+      videoContainer.appendChild(video);
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.placeholder = 'Введите ссылку на видео';
+      input.oninput = function() {
+        video.src = input.value;
+      };
+      videoContainer.appendChild(input);
+      block.appendChild(videoContainer);
+    }
+    container.appendChild(block);
+    closeModal()
+  }
+
+  function deleteBlock(btn) {
+    btn.parentNode.remove();
+  }
+
+  function getDefaultContent(type) {
+    switch (type) {
+      case 'h1':
+      case 'h2':
+      case 'h3':
+      case 'h4':
+      case 'h5':
+      case 'h6':
+        return 'Заголовок';
+      case 'p':
+        return 'Текст';
+      case 'img':
+        return '';
+      case 'video':
+        return '';
+      default:
+        return '';
+    }
+  }
+
+  function getTableHtml() {
+    const rows = prompt('Введите количество строк:');
+    const cols = prompt('Введите количество столбцов:');
+    let tableHtml = '<table contenteditable="true">';
+    for (let i = 0; i < rows; i++) {
+      tableHtml += '<tr>';
+      for (let j = 0; j < cols; j++) {
+        tableHtml += '<td></td>';
+      }
+      tableHtml += '</tr>';
+    }
+    tableHtml += '</table>';
+    return tableHtml;
+  }
+  function getHtml() {
+    const container = document.getElementById('container');
+    const clonedContainer = container.cloneNode(true);
+    const deleteBtns = clonedContainer.getElementsByClassName('delete-btn');
+    while (deleteBtns[0]) {
+      deleteBtns[0].parentNode.removeChild(deleteBtns[0]);
+    }
+
+    // Remove the input element inside the div with the class 'image-container'
+    const imageContainerInputs = clonedContainer.querySelectorAll('.image-container input');
+    imageContainerInputs.forEach(input => {
+      input.remove();
+    });
+
+    // Replace each 'block' div with its innerHTML
+    const blockDivs = clonedContainer.querySelectorAll('.block');
+    blockDivs.forEach(block => {
+      const parent = block.parentNode;
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = block.innerHTML;
+      parent.replaceChild(tempDiv, block);
+    });
+
+    const editableElements = clonedContainer.querySelectorAll('[contenteditable="true"]');
+    editableElements.forEach(element => {
+      element.removeAttribute('contenteditable');
+    });
+
+    const html = clonedContainer.innerHTML;
+
+    var htmlCode = `
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Конструтор сайтов</title>
+</head>
+<body>
+    ${html}
+</body>
+</html>
+`;
+
+    // Создаем временный элемент textarea для копирования в буфер обмена
+    const tempTextarea = document.createElement('textarea');
+    tempTextarea.value = htmlCode;
+    document.body.appendChild(tempTextarea);
+    tempTextarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(tempTextarea);
+
+    alert('HTML скопирован в буфер обмена.');
+  }
+
+
+  /* Когда пользователь нажимает на кнопку,
+переключение между скрытием и отображением раскрывающегося содержимого */
+  function openAddMenu() {
+    document.getElementById("addDropdown").classList.toggle("show");
+  }
+
+  // Закройте выпадающее меню, если пользователь щелкает за его пределами
+  window.onclick = function(event) {
+    if (!event.target.matches('.dropbtn')) {
+      var dropdowns = document.getElementsByClassName("dropdown-content");
+      var i;
+      for (i = 0; i < dropdowns.length; i++) {
+        var openDropdown = dropdowns[i];
+        if (openDropdown.classList.contains('show')) {
+          openDropdown.classList.remove('show');
+        }
+      }
+    }
+  }
+
+  let open_modal = document.querySelectorAll('.addBlock');
+  let close_modal = document.getElementById('close_modal');
+  let modal = document.getElementById('modal');
+  let body = document.getElementsByTagName('body')[0];
+  for (let i = 0; i < open_modal.length; i++) {
+    open_modal[i].onclick = function() { // клик на открытие
+      modal.classList.add('modal_vis'); // добавляем видимость окна
+      modal.classList.remove('bounceOutDown'); // удаляем эффект закрытия
+      body.classList.add('body_block'); // убираем прокрутку
+    };
+  }
+  function closeModal() { // клик на закрытие
+    modal.classList.add('bounceOutDown'); // добавляем эффект закрытия
+    window.setTimeout(function() { // удаляем окно через полсекунды (чтобы увидеть эффект закрытия).
+      modal.classList.remove('modal_vis');
+      body.classList.remove('body_block'); // возвращаем прокрутку
+    }, 0);
+  }
+  close_modal.onclick = function () {
+    closeModal()
+  }
+
+  function copyText() {
+    // Находим элемент с текстом
+    var copyText = document.getElementById("myInput");
+
+    // Выделяем текст внутри элемента
+    copyText.select();
+    copyText.setSelectionRange(0, 99999); // Для поддержки мобильных устройств
+
+    // Копируем выделенный текст в буфер обмена
+    document.execCommand("copy");
+
+    // Визуальное подтверждение копирования
+    alert("Текст скопирован: " + copyText.value);
+  }
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
